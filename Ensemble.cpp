@@ -21,6 +21,7 @@ using namespace std;
 //------------------------------------------------------------- Constantes
 
 //----------------------------------------------------------------- PUBLIC
+
 //----------------------------------------------------- M�thodes publiques
 bool Ensemble::EstEgal(const Ensemble & unEnsemble) const {
 	if (cardActuelle != unEnsemble.cardActuelle) {
