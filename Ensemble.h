@@ -39,48 +39,50 @@ public:
     //
     // Contrat :
     //
-	
-	bool EstEgal (const Ensemble & unEnsemble) const; 
+
+	bool EstEgal (const Ensemble & unEnsemble) const;
     // Mode d'emploi :
     //
     // Contrat :
     //
-    
+
     crduEstInclus EstInclus( const Ensemble & unEnsemble ) const;
     // Mode d'emploi :
     //
     // Contrat :
     //
-    
+
     crduAjouter Ajouter ( int aAjouter );
     // Mode d'emploi :
     //
     // Contrat :
     //
-    
+
     unsigned int Ajuster ( int delta );
     // Mode d'emploi :
     //
     // Contrat :
     //
-    
-    bool Retirer (int element); 
+
+    bool Retirer (int element);
     // Mode d'emploi :
     //
     // Contrat :
     //
-    
-    unsigned int Retirer (const Ensemble & unEnsemble); 
+
+    unsigned int Retirer (const Ensemble & unEnsemble);
     // Mode d'emploi :
     //
     // Contrat :
     //
-    
+
     int Reunir ( const Ensemble & unEnsemble );
     // Mode d'emploi :
     //
     // Contrat :
     //
+
+		unsigned int Intersection ( const Ensemble & unEnsemble);
 
 
 //------------------------------------------------- Surcharge d'opérateurs
@@ -124,10 +126,9 @@ void triEnsembleCroissant(void);
 //----------------------------------------------------- Attributs protégés
 unsigned int cardMax;
 unsigned int cardActuelle;
-int * ensemble; 
+int * ensemble;
 };
 
 //-------------------------------- Autres définitions dépendantes de <Ensemble>
 
 #endif // Ensemble_H
-

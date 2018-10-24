@@ -92,12 +92,12 @@ unsigned int Ensemble::Ajuster ( int delta ) {
 		cardMax = cardActuelle;
 		return cardMax;
 	}
-	
+
 	if( delta < 0 && delta*-1 > (int) cardMax ){
 		cardMax = cardActuelle;
 		return cardMax;
 	}
-	cardMax = cardMax + delta; 
+	cardMax = cardMax + delta;
 	return cardMax;
 }
 
@@ -107,7 +107,7 @@ bool Ensemble::Retirer (int element){
 			for(unsigned j (i);j<cardMax-1;j++){
 				ensemble[j] = ensemble[j+1];
 			}
-			cardActuelle--;
+		//	cardActuelle--;
 			cardMax=cardActuelle;
 			return true;
 		}
@@ -119,13 +119,18 @@ bool Ensemble::Retirer (int element){
 unsigned int Ensemble::Retirer (const Ensemble & unEnsemble){
 	unsigned int cptElemRetrait = 0;
 	unsigned int cardMaxEnsemble = cardMax;
+	//cout<< "LA CARD ACTUELLE : " << cardActuelle<< endl;
 	for(unsigned i (0) ;i<unEnsemble.cardActuelle;i++)
 	{
 		if(Retirer(unEnsemble.ensemble[i])){
+		//	cout<< "LA CARD ACTUELLE(boucle) : " << cardActuelle<< endl;
 		 	cptElemRetrait++;
 		 }
 	}
+	//cout<< "LA CARD ACTUELLE(boucle fin) : " << cardActuelle<< endl;
+	cardActuelle = cardActuelle-cptElemRetrait;
 	cardMax = cardMaxEnsemble;
+	//cout<< "LA CARD ACTUELLE(boucle fin) : " << cardActuelle<< endl;
 	return cptElemRetrait;
 }
 
@@ -136,12 +141,13 @@ int Ensemble::Reunir( const Ensemble & unEnsemble)
 #endif
 	int signe = 1;
 	int nbAjout = 0;
-	for( unsigned i(0); i < unEnsemble.cardActuelle; i++ ) 
+	int retourAjout;
+	for(unsigned i(0); i < unEnsemble.cardActuelle; i++)
 	{
 #ifdef MAP
 	cout << "le " << i << " eme element est : " << unEnsemble.ensemble[i] << endl;
 #endif
-		int retourAjout = (int)  Ajouter(unEnsemble.ensemble[i]);
+		retourAjout = Ajouter(unEnsemble.ensemble[i]);
 		if (retourAjout == 2 ) // cas element ajouté
 		{
 			nbAjout++;
@@ -149,7 +155,7 @@ int Ensemble::Reunir( const Ensemble & unEnsemble)
 		else if( retourAjout == 1) // cas liste pleine
 		{
 			Ajuster(1);
-			int verif = (int)  Ajouter(unEnsemble.ensemble[i]);
+			int verif = Ajouter(unEnsemble.ensemble[i]);
 			signe = -1;
 			nbAjout++;
 #ifdef MAP
@@ -157,11 +163,39 @@ int Ensemble::Reunir( const Ensemble & unEnsemble)
 	cout << "verification : " << verif << endl;
 #endif
 		}
-			
-	}	
-
+	}
 	return nbAjout*signe;
+}
 
+unsigned int Ensemble::Intersection ( const Ensemble & unEnsemble)
+{
+	Ensemble ensembleRetrait(1000);
+	unsigned cptElemRetrait =0;
+	if(unEnsemble.cardActuelle == 0){
+		int tmp = cardActuelle;
+		cardActuelle = 0;
+		cardMax = 0;
+		return tmp;
+	}
+	for(unsigned i (0);i<cardActuelle;i++){
+		bool contenue = false;
+		for(unsigned j (0); j <unEnsemble.cardActuelle ; j++)
+		{
+			bool ega = ensemble[i] == unEnsemble.ensemble[j];
+			if( ega )
+			{
+				contenue = true;
+			}
+		}
+
+		if(!contenue){
+			ensembleRetrait.Ajouter(ensemble[i]);
+			cptElemRetrait++;
+		}
+	}
+	Retirer(ensembleRetrait);
+	cardMax=cardActuelle;
+	return cptElemRetrait;
 }
 
 
